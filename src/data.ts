@@ -13,7 +13,7 @@ export const locations: Location[] = [
     id: 'arbol',
     name: 'Árbol de los sueños',
     emoji: '🌳',
-    mood: 'Espiritu libre',
+    mood: 'Espíritu libre',
     description: 'Un rincón tranquilo donde Ari mira el cielo y escucha el viento entre las ramas.',
     activities: ['dibujar nubes', 'escuchar pájaros', 'contar historias'],
     accent: '#7cc68b',
