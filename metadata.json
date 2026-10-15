@@ -1,0 +1,6 @@
+{
+  "name": "El Barrio de Peanuts",
+  "description": "Juego de exploración interactivo en el barrio de Peanuts con Ari: casas completas, caseta de Snoopy, muro de pensar, cuaderno y escenarios clásicos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
