@@ -3,11 +3,13 @@ import { locations, missions } from './data';
 
 export default function App() {
   const [selectedId, setSelectedId] = useState(locations[0].id);
-  const [note, setNote] = useState('Hoy Ari ha decidido explorar el barrio y dejar una huella alegre en cada rincón.');
+  const [note, setNote] = useState(
+    'Hoy Ari ha decidido explorar el barrio y dejar una huella alegre en cada rincón.'
+  );
 
   const selected = useMemo(
     () => locations.find((item) => item.id === selectedId) ?? locations[0],
-    [selectedId],
+    [selectedId]
   );
 
   return (
@@ -49,7 +51,6 @@ export default function App() {
               <p>{selected.description}</p>
               <div className="mood-chip">{selected.mood}</div>
             </div>
-
             <div className="scene-card">
               <span>Qué hacer</span>
               <ul>
