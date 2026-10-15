@@ -8,7 +8,7 @@ import { buildCharacterSystemInstruction, getContextualReply } from "./src/utils
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
@@ -156,16 +156,7 @@ app.post("/api/think", async (req, res) => {
   const { topic } = req.body || {};
   const apiKey = extractOpenRouterApiKey(req);
 
-  const prompt = `Eres el narrador contemplativo del universo de Peanuts de Charles M. Schulz y del Muro de Pensar de Ari.
-Genera una reflexión breve, original, profunda y hermosa sobre el tema '${topic || "la vida, el silencio, el tiempo, la amistad o los sueños"}'.
-Debe capturar la sabiduría agridulce, poética y serena de Peanuts.
-Devuelve ÚNICAMENTE un JSON estrictamente válido con este formato:
-{
-  "quote": "texto de la reflexión",
-  "author": "Reflexión del Muro de Pensar",
-  "theme": "${topic || "vida"}",
-  "isOriginal": true
-}`;
+  const prompt = `Eres el narrador contemplativo del universo de Peanuts de Charles M. Schulz y del Muro de Pensar de Ari.\nGenera una reflexión breve, original, profunda y hermosa sobre el tema '${topic || "la vida, el silencio, el tiempo, la amistad o los sueños"}'.\nDebe capturar la sabiduría agridulce, poética y serena de Peanuts.\nDevuelve ÚNICAMENTE un JSON estrictamente válido con este formato:\n{\n  "quote": "texto de la reflexión",\n  "author": "Reflexión del Muro de Pensar",\n  "theme": "${topic || "vida"}",\n  "isOriginal": true\n}`;
 
   if (apiKey) {
     try {
@@ -270,8 +261,7 @@ app.post("/api/chat", async (req, res) => {
   if (isInitialGreeting || (!message && (!Array.isArray(history) || history.length === 0))) {
     messages.push({
       role: "user",
-      content: `Ari acaba de acercarse a saludarte en '${locationName || "el vecindario"}'${activity ? ` mientras estabas: ${activity}` : ""}${timeOfDay ? ` (momento del día: ${timeOfDay})` : ""}.
-Saludá a Ari en español argentino con calidez y hacé una observación inicial viva, espontánea y con tu estilo inconfundible de Peanuts, demostrando que estás plenamente consciente de este lugar, de tus recuerdos y de quién sos. NUNCA uses clichés ni español de España.`,
+      content: `Ari acaba de acercarse a saludarte en '${locationName || "el vecindario"}'${activity ? ` mientras estabas: ${activity}` : ""}${timeOfDay ? ` (momento del día: ${timeOfDay})` : ""}.\nSaludá a Ari en español argentino con calidez y hacé una observación inicial viva, espontánea y con tu estilo inconfundible de Peanuts, demostrando que estás plenamente consciente de este lugar, de tus recuerdos y de quién sos. NUNCA uses clichés ni español de España.`,
     });
   } else {
     messages.push({
@@ -348,7 +338,7 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.resolve(__dirname, "dist");
+    const distPath = path.resolve(process.cwd(), "dist");
     app.use(express.static(distPath));
     app.get("*", (_req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
@@ -356,7 +346,7 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`🚀 Peanuts Barrio dev server running on http://localhost:${PORT}`);
+    console.log(`🚀 Peanuts Barrio server running on http://0.0.0.0:${PORT}`);
     console.log(`🤖 AI Engine: OpenRouter (${OPENROUTER_MODEL}) with Internet Search`);
   });
 }
